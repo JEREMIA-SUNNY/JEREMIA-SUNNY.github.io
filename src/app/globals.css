@@ -1,26 +1,189 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   Design system tokens
+   Colour, elevation, radius and motion are defined once here and
+   consumed everywhere else through Tailwind's `@theme inline` map.
+   ============================================================ */
+
 :root {
+  /* Surfaces & text */
   --background: #ffffff;
+  --background-alt: #fafafa;
   --foreground: #171717;
+  --surface: #f4f4f5;
+  --surface-hover: #e4e4e7;
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --muted-foreground: #52525b;
+
+  /* Accents */
+  --accent: #0891b2;
+  --accent-foreground: #ffffff;
+  --accent-soft: rgb(8 145 178 / 0.12);
+  --accent-2: #7c3aed;
+  --glow: rgb(8 145 178 / 0.25);
+
+  /* Elevation */
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.05), 0 24px 48px -20px rgb(0 0 0 / 0.22);
+
+  /* Radius scale */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* Motion — shared language for every animated element */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 500ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dark {
+  --background: #08080a;
+  --background-alt: #0d0d10;
+  --foreground: #ededed;
+  --surface: #131316;
+  --surface-hover: #1c1c21;
+  --border: #27272a;
+  --border-strong: #3f3f46;
+  --muted-foreground: #a1a1aa;
+
+  --accent: #22d3ee;
+  --accent-foreground: #04222b;
+  --accent-soft: rgb(34 211 238 / 0.14);
+  --accent-2: #a78bfa;
+  --glow: rgb(34 211 238 / 0.28);
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.5), 0 24px 48px -20px rgb(0 0 0 / 0.8);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-alt: var(--background-alt);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-2: var(--accent-2);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --ease-out-expo: var(--ease-out-expo);
+  --ease-spring: var(--ease-spring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  /* Decorative glows and parallax layers can extend past the viewport edge.
+     `clip` (not `hidden`) suppresses the horizontal scrollbar without turning
+     the element into a scroll container, which would break `position: sticky`
+     on the navbar and ScrollTrigger's window-scroll assumptions. */
+  overflow-x: clip;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+
+/* Depth: a soft radial wash used behind hero/section content. */
+@utility bg-radial-glow {
+  background-image: radial-gradient(
+    60% 60% at 50% 40%,
+    var(--glow) 0%,
+    transparent 70%
+  );
+}
+
+/* Depth: engineering-grid backdrop, masked so it fades out at the edges. */
+@utility bg-grid {
+  background-image: linear-gradient(
+      to right,
+      var(--border) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+}
+
+@utility text-gradient {
+  background-image: linear-gradient(
+    110deg,
+    var(--foreground) 20%,
+    var(--accent) 50%,
+    var(--accent-2) 80%
+  );
+  background-clip: text;
+  color: transparent;
+}
+
+/* Elements a motion primitive will animate start hidden, so a reveal never
+   flashes its final position before GSAP takes over. Three escape hatches put
+   the content back if motion never runs: the reduced-motion query below, the
+   <noscript> override in layout.tsx, and the `.motion-off` kill-switch the
+   MotionProvider sets when GSAP fails to initialise. */
+@utility motion-hidden {
+  opacity: 0;
+}
+
+html.motion-off .motion-hidden {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ============================================================
+   Accessibility
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .motion-hidden {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* The custom cursor replaces the native one only on precise pointers that
+   are actually rendering it; touch and reduced-motion users keep theirs. */
+html.custom-cursor-active,
+html.custom-cursor-active a,
+html.custom-cursor-active button,
+html.custom-cursor-active [role="button"] {
+  cursor: none;
 }
