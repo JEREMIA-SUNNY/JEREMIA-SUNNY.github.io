@@ -7,15 +7,15 @@ import { Experience } from "@/components/sections/Experience";
 import { Blog } from "@/components/sections/Blog";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 
-// Narrative order: who → what I can do → proof → the toolbox → history → reach out.
+// Narrative order: who → what I can do → the toolbox → proof → history → reach out.
 export default function Home() {
   return (
     <>
       <Hero />
       <About />
       <Capabilities />
-      <ProjectsGrid />
       <Skills />
+      <ProjectsGrid />
       <Experience />
       <Blog />
       <ContactCTA />
