@@ -26,10 +26,10 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${site.name} — Full-Stack Developer Portfolio`,
+    default: `${site.name} — Full Stack Engineer Portfolio`,
     template: `%s · ${site.name}`,
   },
-  description: `${site.name} is a full-stack developer portfolio showcasing React, Next.js, and NestJS projects, case studies, and professional experience.`,
+  description: `${site.name} is a full stack engineer portfolio showcasing React, Next.js, and NestJS projects, case studies, and professional experience.`,
   keywords: [
     "developer portfolio",
     "full-stack developer portfolio",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     site.name,
   ],
   openGraph: {
-    title: `${site.name} — Full-Stack Developer Portfolio`,
+    title: `${site.name} — Full Stack Engineer Portfolio`,
     description: site.heroIntro,
     url: siteUrl,
     siteName: `${site.name} — Portfolio`,
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Full-Stack Developer Portfolio`,
+    title: `${site.name} — Full Stack Engineer Portfolio`,
     description: site.heroIntro,
   },
 };

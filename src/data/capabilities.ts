@@ -21,10 +21,10 @@ export const capabilities: Capability[] = [
     icon: "Server",
     title: "Backend & APIs",
     summary:
-      "NestJS and Node services behind REST and GraphQL surfaces, with schema design, auth and caching handled up front.",
+      "NestJS and Node services behind REST and tRPC surfaces, with schema design, auth and caching handled up front.",
     proof:
-      "SaaS platforms and internal tools in production on PostgreSQL, with API response times tuned rather than guessed at.",
-    tools: ["NestJS", "Node.js", "PostgreSQL", "GraphQL", "Drizzle ORM"],
+      "Multi-tenant B2B platforms in production on PostgreSQL — tenant isolation, RBAC matrices and audit trails across Nirnai and NKE Wire Assembly ERP.",
+    tools: ["NestJS", "Node.js", "PostgreSQL", "tRPC", "Drizzle ORM"],
   },
   {
     icon: "Sparkles",
@@ -50,7 +50,7 @@ export const capabilities: Capability[] = [
     summary:
       "Shipping work that stays fast after launch: measured budgets, optimised assets, and pipelines that deploy without ceremony.",
     proof:
-      "Capability-gated 3D, lazy-loaded imagery and a paused render loop off-screen; CI/CD to AWS on the day job.",
-    tools: ["AWS", "Docker", "GitHub Actions", "Core Web Vitals"],
+      "Capability-gated 3D, lazy-loaded imagery and a paused render loop off-screen; AWS (Lambda, EC2, RDS, S3, SES) and GitHub Actions on the day job.",
+    tools: ["AWS", "Docker", "GitHub Actions", "PM2 / Nginx"],
   },
 ];

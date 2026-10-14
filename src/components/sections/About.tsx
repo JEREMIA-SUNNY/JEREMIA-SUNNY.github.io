@@ -60,7 +60,7 @@ export function About() {
               <p className="text-sm">
                 Currently building at{" "}
                 <span className="font-medium text-foreground">{site.currentCompany}</span> as a
-                Full-Stack Developer.
+                Full Stack Engineer.
               </p>
             </div>
           </Reveal>
