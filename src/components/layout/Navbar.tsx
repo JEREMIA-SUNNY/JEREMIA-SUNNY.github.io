@@ -17,7 +17,6 @@ const NAV_ITEMS = [
   { href: "/#projects", label: "Projects" },
   { href: "/#experience", label: "Experience" },
   { href: "/#blog", label: "Writing" },
-  { href: "/#contact", label: "Contact" },
 ];
 
 const SECTION_IDS = NAV_ITEMS.map((item) => item.href.split("#")[1]);

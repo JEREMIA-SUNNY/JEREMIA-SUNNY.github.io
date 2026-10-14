@@ -5,9 +5,8 @@ import { ProjectsGrid } from "@/components/sections/ProjectsGrid";
 import { Skills } from "@/components/sections/Skills";
 import { Experience } from "@/components/sections/Experience";
 import { Blog } from "@/components/sections/Blog";
-import { ContactCTA } from "@/components/sections/ContactCTA";
 
-// Narrative order: who → what I can do → the toolbox → proof → history → reach out.
+// Narrative order: who → what I can do → the toolbox → proof → history.
 export default function Home() {
   return (
     <>
@@ -18,7 +17,6 @@ export default function Home() {
       <ProjectsGrid />
       <Experience />
       <Blog />
-      <ContactCTA />
     </>
   );
 }
